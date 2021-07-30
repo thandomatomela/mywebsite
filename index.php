@@ -3,8 +3,12 @@
         header('Location: index.php');
     }
 	if($_GET['q'] !== ''){
-		$con = mysql_connect('localhost','root','H0$t@Linux');
-		$db = mysql_select_db('acobryoo_contacts');
+		$host = "database";
+                $user = "root";
+                $pass = "password";
+                $db = "web-search-db";
+		$con = mysqli_connect($host,$user,$pass,$db);
+		
 ?>	
 <html>
 <head>
@@ -60,13 +64,13 @@ function inactive(){
 	    if(!isset($q)){
 	        echo '';
 	    }else {
-		$query = mysql_query("SELECT * FROM websites WHERE department LIKE '%$q%' OR domain LIKE '%$q%'");
-		$num_rows = mysql_num_rows($query);
+		$query = mysqli_query($con, "SELECT * FROM websites WHERE department LIKE '%$q%' OR domain LIKE '%$q%'");
+		$num_rows = mysqli_num_rows($query);
 		?>
 		<P><strong><?php echo $num_rows; ?></strong> Result(s) For '<?php echo $q; ?>'</P>
 		<?php
 	
-		while($row = mysql_fetch_array($query)){
+		while($row = mysqli_fetch_array($query)){
 			$id = $row['id'];
 			$department = $row['department'];
 			$domain = $row['domain'];
